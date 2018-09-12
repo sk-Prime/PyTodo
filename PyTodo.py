@@ -31,6 +31,7 @@ class Main_UI(tkinter.Frame):
         self.root.resizable(1,0)
         self.root.minsize(580,352)
         self.root.bind("<Return>",self.root_bind)
+        self.root.bind("<Delete>",self.root_bind_del)
         self.root.protocol("WM_DELETE_WINDOW",self.__exit_handle)
         self.column=["SN","Date","Task","Duration","Progress%","Status","Message"]
         self.column_size=[7,55,100,38,50,60,10]
@@ -87,9 +88,9 @@ class Main_UI(tkinter.Frame):
         self.task_entry=tkinter.Entry(self.input_frame,width=45,textvariable=self.entryVar[0])
         self.task_entry.grid(row=1,column=0,pady=2)
         
-        self.dur_label=tkinter.Label(self.input_frame,text="Duration")
+        self.dur_label=tkinter.Label(self.input_frame,text="Duration in day")
         self.dur_label.grid(row=0,column=1)
-        self.dur_entry=tkinter.Entry(self.input_frame,width=10,textvariable=self.entryVar[1])
+        self.dur_entry=tkinter.Entry(self.input_frame,width=15,textvariable=self.entryVar[1])
         self.dur_entry.grid(row=1,column=1,pady=2)        
         
         self.prog_label=tkinter.Label(self.input_frame,text="Progress %")
@@ -229,14 +230,22 @@ class Main_UI(tkinter.Frame):
         temp=[]
         temp2={}
         for task in incomplete:
-            temp.append(task[-2])
-            temp2[task[-2]]=task
+            duration=task[-2]
+            if duration not in temp:
+                temp.append(duration)
+            if duration not in temp2:
+                temp2[duration]=[task]
+            else:
+                temp2[duration].append(task)
         temp.sort()
         incomplete=[]
         for i in temp:
-            incomplete.append(temp2[i])
+            extract=(temp2[i])
+            for t in extract:
+                incomplete.append(t)
         
         all_item=incomplete+failed+complete+note+invalid
+
         return all_item
     
     def __starting(self):
@@ -271,10 +280,11 @@ class Main_UI(tkinter.Frame):
                 self.tree.insert("",num,values=task,tag="gray")            
             else:
                 self.tree.insert("",num,values=task)
+            self.total_item+=1
         if message:
             message+="\nFocus on this task before you failed to complete"
-        else:
-            message="1. press \"clear\", Then insert your task name in task entry, you can make necessary note in this messagebox\n\n2. Type how long it will take to complete in day/s, no duration means it is a note\n\n3. Type a estimate value of your progress and press update to update the data\n\n4. select task from treeview then press delete to delete it"
+        #else:
+            #message="1. press \"clear\", Then insert your task name in task entry, you can make necessary note in this messagebox\n\n2. Type how long it will take to complete in day/s, no duration means it is a note\n\n3. Type a estimate value of your progress and press update to update the data\n\n4. select task from treeview then press delete to delete it"
         self.stext.insert("end",me+message)
         
         
@@ -303,6 +313,9 @@ class Main_UI(tkinter.Frame):
             self.update_command()
         else:
             self.insert_command()
+    def root_bind_del(self,arg):
+        if not type(self.root.focus_get())==tkinter.scrolledtext.ScrolledText:
+            self.delete_command()
     
     def __exit_handle(self):
         tdb=self.__make_list()
