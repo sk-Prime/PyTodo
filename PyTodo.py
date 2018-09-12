@@ -283,8 +283,8 @@ class Main_UI(tkinter.Frame):
             self.total_item+=1
         if message:
             message+="\nFocus on this task before you failed to complete"
-        #else:
-            #message="1. press \"clear\", Then insert your task name in task entry, you can make necessary note in this messagebox\n\n2. Type how long it will take to complete in day/s, no duration means it is a note\n\n3. Type a estimate value of your progress and press update to update the data\n\n4. select task from treeview then press delete to delete it"
+        else:
+            message="1. press \"clear\", Then insert your task name in task entry, you can make necessary note in this messagebox\n\n2. Type how long it will take to complete in day/s, no duration means it is a note\n\n3. Type a estimate value of your progress and press update to update the data\n\n4. select task from treeview then press delete to delete it"
         self.stext.insert("end",me+message)
         
         
