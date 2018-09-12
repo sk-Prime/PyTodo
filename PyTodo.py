@@ -157,8 +157,8 @@ class Main_UI(tkinter.Frame):
             for t in extract:
                 incomplete.append(t)
         
-        all_item=incomplete+failed+complete+note+invalid #changing this order will affect how item will listed in next time.
-        return all_item                                  #if we restart the program first incomplete task will be shown
+        all_item=incomplete+failed+complete+note+invalid #changing this order will affect how items will listed in next starting time.
+        return all_item                                  #if we restart the program, incomplete tasks will be shown at the top
     
     def __starting(self):
         """this method will call at starting point, it will read data from database then insert in treeview"""
