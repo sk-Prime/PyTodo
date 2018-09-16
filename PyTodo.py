@@ -40,7 +40,7 @@ class Main_UI(tkinter.Frame):
         
         self.column=["SN","Date","Task","Duration","Progress%","Status","Message"]
         self.column_size=[7,55,100,38,50,60,10]
-        self.date=datetime.now().strftime("%d/%m-%I:%M")
+        self.date=datetime.now().strftime("%d/%m-%H:%M")
         self.total_item=0
 
         
@@ -157,8 +157,8 @@ class Main_UI(tkinter.Frame):
             for t in extract:
                 incomplete.append(t)
         
-        all_item=incomplete+failed+complete+note+invalid #changing this order will affect how items will listed in next starting time.
-        return all_item                                  #if we restart the program, incomplete tasks will be shown at the top
+        all_item=incomplete+failed+complete+note+invalid #changing this order will affect how item will listed in next time.
+        return all_item                                  #if we restart the program first incomplete task will be shown
     
     def __starting(self):
         """this method will call at starting point, it will read data from database then insert in treeview"""
@@ -187,8 +187,8 @@ class Main_UI(tkinter.Frame):
     def __elapsed_time(self,date,current_date):
         """every item has its own assigned date, we can get elapsed time by subtracting from current date"""
         
-        day_old=datetime.strptime(date,"%d/%m-%I:%M")
-        day_Current=datetime.strptime(current_date,"%d/%m-%I:%M")
+        day_old=datetime.strptime(date,"%d/%m-%H:%M")
+        day_Current=datetime.strptime(current_date,"%d/%m-%H:%M")
         day_passed=day_Current-day_old
         day_passed=(abs(day_passed.days)*86400)+day_passed.seconds
         return day_passed/86400 #days. ex: <float> 3.5 days
