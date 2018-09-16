@@ -193,6 +193,9 @@ class Main_UI(tkinter.Frame):
         day_passed=day_Current-day_old
         day_passed=(abs(day_passed.days)*86400)+day_passed.seconds
         return day_passed/86400 #days. ex: <float> 3.5 days
+    
+    def __time_update(self):
+        self.date=datetime.now().strftime("%d/%m-%H:%M")
         
     def __status(self,duration,progress,date,task):
         """this method generate status data and define treeview color tag"""
@@ -225,6 +228,7 @@ class Main_UI(tkinter.Frame):
     #------------------------------button commands-----------------------     
     def insert_command(self):
         """collect data from all input and then insert in treeview"""
+        self.__time_update()
         self.total_item+=1
         serial=self.total_item
         task=self.entryVar[0].get()
