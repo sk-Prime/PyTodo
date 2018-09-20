@@ -153,10 +153,10 @@ class Main_UI(tkinter.Frame):
                 temp2[duration].append(task)
         temp.sort()
         incomplete=[]
-        for i in temp:
-            extract=(temp2[i])
-            for t in extract:
-                incomplete.append(t)
+        for f in temp:
+            extract=(temp2[f]) #[[],[]..]
+            for item in extract:
+                incomplete.append(item)
         
         all_item=incomplete+failed+complete+note+invalid #changing this order will affect how item will listed in next time.
         return all_item                                  #if we restart the program first incomplete task will be shown
