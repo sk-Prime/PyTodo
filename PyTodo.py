@@ -237,7 +237,8 @@ class Main_UI(tkinter.Frame):
         progress=self.entryVar[2].get()
         date=self.date
         message=self.stext.get("1.0","end-1c")
-        
+        if "welcome to"in message:
+            message=""
         progress,status,tag=self.__status(duration, progress, date, task)
         
         item=self.tree.insert('',serial,values=(serial,date,task,duration,progress,status,message),tag=tag)
