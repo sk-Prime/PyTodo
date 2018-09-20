@@ -144,6 +144,7 @@ class Main_UI(tkinter.Frame):
         temp2={}
         for task in incomplete:
             duration=task[-2]
+            duration=float(duration[:duration.index("d")-1])
             if duration not in temp:
                 temp.append(duration)
             if duration not in temp2:
